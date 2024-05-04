@@ -64,5 +64,16 @@ public class BoardService {
         int page = pageable.getPageNumber() - 1;
         int pageLimit = 3;
         Page<BoardEntity> boardEntities = boardRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
+
+        System.out.println("boardEntities.getContent() = " + boardEntities.getContent());
+        System.out.println("boardEntities.getTotalElements() = " + boardEntities.getTotalElements());
+        System.out.println("boardEntities.getNumber() = " + boardEntities.getNumber());
+        System.out.println("boardEntities = " + boardEntities.getTotalPages());
+        System.out.println("boardEntities.getSize() = " + boardEntities.getSize());
+        System.out.println("boardEntities.hasPrevious() = " + boardEntities.hasPrevious());
+        System.out.println("boardEntities.isFirst() = " + boardEntities.isFirst());
+        System.out.println("boardEntities.isLast() = " + boardEntities.isLast());
+
+        return boardEntities.map(board -> new BoardDTO(board.getId(), board.getBoardWriter(), board.getBoardTitle(), board.getBoardHits(), board.getCreatedTime()));
     }
 }
