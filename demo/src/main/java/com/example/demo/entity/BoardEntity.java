@@ -4,6 +4,7 @@ import com.example.demo.dto.BoardDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 @Getter
@@ -26,6 +27,9 @@ public class BoardEntity extends BaseEntity {
     private String boardContents;
 
     @Column
+    private int fileAttached;
+
+    @Column
     private int boardHits;
 
     public static BoardEntity toSaveEntity(BoardDTO boardDTO){
@@ -35,6 +39,7 @@ public class BoardEntity extends BaseEntity {
         boardEntity.setBoardTitle(boardDTO.getBoardTitle());
         boardEntity.setBoardContents(boardDTO.getBoardContents());
         boardEntity.setBoardHits(0);
+        boardEntity.setFileAttached(0);
 
         return boardEntity;
     }

@@ -2,6 +2,7 @@ package com.example.demo.dto;
 
 import com.example.demo.entity.BoardEntity;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 
@@ -16,7 +17,14 @@ public class BoardDTO {
     private String boardPass;
     private String boardTitle;
     private String boardContents;
+
+    private MultipartFile boardFile;
+    private String originalFileName;
+    private String storedFileName;
+    private int fileAttached;
+
     private int boardHits;
+
     private LocalDateTime boardCreatedTime;
     private LocalDateTime boardUpdatedTime;
 
