@@ -31,17 +31,19 @@ public class BoardService {
         if(boardDTO.getBoardFile().isEmpty()){
             boardRepository.save(BoardEntity.toSaveEntity(boardDTO));
         }else {
-            MultipartFile boardFile = boardDTO.getBoardFile();
-            String originalFilename = boardFile.getOriginalFilename();
-            String storedFileName = System.currentTimeMillis() + "_" + originalFilename;
-            String savePath = "C:/Users/kimjuwon/Desktop/test/img/" + storedFileName;
-            boardFile.transferTo(new File(savePath));
             BoardEntity boardEntity = BoardEntity.toSaveFileEntity(boardDTO);
             Long savedId = boardRepository.save(boardEntity).getId();
             BoardEntity board = boardRepository.findById(savedId).get();
+            for(MultipartFile boardFile : boardDTO.getBoardFile()) {
+//                MultipartFile boardFile = boardDTO.getBoardFile();
+                String originalFilename = boardFile.getOriginalFilename();
+                String storedFileName = System.currentTimeMillis() + "_" + originalFilename;
+                String savePath = "C:/Users/kimjuwon/Desktop/test/img/" + storedFileName;
+                boardFile.transferTo(new File(savePath));
 
-            BoardFileEntity boardFileEntity = BoardFileEntity.toBoardFileEntity(board, originalFilename, storedFileName);
-            boardFileRepository.save(boardFileEntity);
+                BoardFileEntity boardFileEntity = BoardFileEntity.toBoardFileEntity(board, originalFilename, storedFileName);
+                boardFileRepository.save(boardFileEntity);
+            }
         }
     }
 
